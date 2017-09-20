@@ -1,2 +1,2 @@
-[username]=ahmedsadman.211@gmail.com
-[password]=open_asms
+[username]=mytest
+[password]=mytest
