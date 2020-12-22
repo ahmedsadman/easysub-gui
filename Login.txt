@@ -1,2 +1,2 @@
-[username]=mytest
-[password]=mytest
+[username]=
+[password]=
