@@ -42,23 +42,24 @@ class Auth:
             f.close()
         return LoginInfo
 
+    def login(self):
+        print("Logging in...")
+        data = self.get_login_data()
+        User = data[0]
+        Pass = data[1]
+        self.logindata = self.rpc.LogIn(User, Pass, "eng", self.user_agent)
+        if "200 OK" not in self.logindata["status"]:
+            return False
+
+        self.Token = self.logindata["token"]
+        print("login complete")
+        return self.Token
+
     def get_token(self):
         # function to login the user
-        print("Inside gettoken func")
-        if self.Token is not None:
-            return self.Token
-        else:
-            print("Logging in...")
-            data = self.get_login_data()
-            User = data[0]
-            Pass = data[1]
-            self.logindata = self.rpc.LogIn(User, Pass, "eng", self.user_agent)
-            if "200 OK" not in self.logindata["status"]:
-                return False
-
-            self.Token = self.logindata["token"]
-            print("login complete")
-            return self.Token
+        if self.Token is None:
+            return self.login()
+        return self.Token
 
     def logout(self):
         # function to logout
