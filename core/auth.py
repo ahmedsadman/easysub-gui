@@ -1,3 +1,4 @@
+import os
 from xmlrpc.client import ServerProxy
 from .static import Static
 
@@ -9,6 +10,7 @@ class Auth:
         )  # allow_none is mandatory to make some methods work
         self.Token = None
         self.user_agent = Static.agent
+        self.datafile = Static.datafile
 
     def get_rpc(self):
         return self.rpc
@@ -20,7 +22,12 @@ class Auth:
         # to access the OpenSub api, every user should have an account,
         # the account credentials are stored in the folder Login.txt,
         # this function retrieves the data from the said file
-        with open("Login.txt", "r") as f:
+        if not os.path.exists(self.datafile):
+            # create file if not exists
+            with open(self.datafile, "w") as f:
+                f.writelines(["[username]=\n", "[password]="])
+
+        with open(self.datafile, "r") as f:
             x = f.readlines()
             x1 = x[0].strip()  # strip function is used to avoid Newlines
             x2 = x[1].strip()
@@ -37,8 +44,7 @@ class Auth:
                 print(
                     "WARNING: This program requires your userinfo to work properly. Please provide your login credentials in Login.txt\nTrying anonymous login\n"
                 )
-        if not f.closed:
-            f.close()
+
         return LoginInfo
 
     def login(self):

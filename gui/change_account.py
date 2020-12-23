@@ -1,4 +1,5 @@
 import wx
+from core import Static
 
 
 class ChangeAccountGUI(wx.Dialog):
@@ -17,7 +18,7 @@ class ChangeAccountGUI(wx.Dialog):
         self.st_pass = wx.StaticText(panel, label="Password")
 
         self.user_txt = wx.TextCtrl(panel, size=(200, -1))
-        self.pass_txt = wx.TextCtrl(panel, size=(200, -1))
+        self.pass_txt = wx.TextCtrl(panel, size=(200, -1), style=wx.TE_PASSWORD)
         self.btnConfirm = wx.Button(panel, label="OK", size=(60, 40))
 
         vbox.Add(-1, 10)
@@ -51,7 +52,7 @@ class ChangeAccountGUI(wx.Dialog):
         string = "[username]=" + username + "\n" + "[password]=" + password
         print(string)
 
-        with open("Login.txt", "w") as f:
+        with open(Static.datafile, "w") as f:
             f.write(string)
 
         wx.MessageBox(

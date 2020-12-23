@@ -1,5 +1,5 @@
 venv
 *.pyc
 __pycache__
-Login.txt
+Account.bin
 .env
