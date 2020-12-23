@@ -20,11 +20,12 @@ class GUI(wx.Frame):
         )
         wait = wx.BusyInfo("Logging in, please wait...")
         self.auth = Auth()
-        self.handler = SubtitleHandler(self.auth)
+        self.sub_handler = SubtitleHandler(self.auth)
 
         try:
-            self.token = self.auth.getToken()  # login the user
-        except:
+            self.token = self.auth.get_token()  # login the user
+        except Exception as e:
+            print(e)
             del wait
             wx.MessageBox(
                 "Login failed. Please check internet connection",
@@ -49,9 +50,9 @@ class GUI(wx.Frame):
                 pass
             self.Destroy()
 
-        self.initUI()
+        self.init_ui()
 
-    def initUI(self):
+    def init_ui(self):
         vbox = wx.BoxSizer(wx.VERTICAL)
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         panel = wx.Panel(self, -1)
@@ -92,18 +93,18 @@ class GUI(wx.Frame):
         panel.SetSizer(vbox)
 
         # event bindings
-        self.Bind(wx.EVT_BUTTON, self.onReset, self.btnReset)
-        self.Bind(wx.EVT_BUTTON, self.onQuit, self.btnQuit)
-        self.Bind(wx.EVT_BUTTON, self.onDownload, self.btnDownlaod)
-        self.Bind(wx.EVT_MENU, self.About, id=ID_ABOUTBOX)
-        self.Bind(wx.EVT_MENU, self.ChangeAC, id=ID_CHANGEACMENU)
+        self.Bind(wx.EVT_BUTTON, self.on_reset, self.btnReset)
+        self.Bind(wx.EVT_BUTTON, self.on_quit, self.btnQuit)
+        self.Bind(wx.EVT_BUTTON, self.on_download, self.btnDownlaod)
+        self.Bind(wx.EVT_MENU, self.about, id=ID_ABOUTBOX)
+        self.Bind(wx.EVT_MENU, self.change_account, id=ID_CHANGEACMENU)
 
         # window settings
         self.Centre()
         self.SetSize(600, 400)
         self.Show(True)
 
-    def About(self, e):
+    def about(self, e):
         description = wordwrap(
             "Cross platform automated subtitle downloader, that uses movie file hash to identify and download subtitle",
             300,
@@ -113,18 +114,18 @@ class GUI(wx.Frame):
 
         info = wx.adv.AboutDialogInfo()
         info.SetName("Easy Sub")
-        info.SetVersion("2.0")
+        info.SetVersion("2.1")
         info.SetDescription(description)
         info.SetLicense(license)
         info.AddDeveloper("Sadman Muhib Samyo")
         wx.adv.AboutBox(info)
 
-    def ChangeAC(self, e):
+    def change_account(self, e):
         dlg = ChangeAccountGUI(None, -1, "Account info")
         dlg.ShowModal()
         dlg.Destroy()
 
-    def Downloader(self):
+    def downloader(self):
         total_items = self.list.GetItemCount()
         print("Total Items", total_items)
         for item_index in range(total_items):
@@ -137,7 +138,7 @@ class GUI(wx.Frame):
             print("Getting inside try/catch")
             try:
                 print("Inside Try")
-                if self.handler.subSearch(path):
+                if self.sub_handler.search(path):
                     wx.CallAfter(
                         self.list.SetItem, item_index, 1, "OK"
                     )  # update the listcontrol for
@@ -154,13 +155,13 @@ class GUI(wx.Frame):
                 return
         wx.MessageBox("All tasks completed", "EasySub", wx.OK | wx.ICON_INFORMATION)
 
-    def onDownload(self, e):
-        Thread(target=self.Downloader).start()
+    def on_download(self, e):
+        Thread(target=self.downloader).start()
 
-    def onReset(self, e):
+    def on_reset(self, e):
         self.list.DeleteAllItems()
 
-    def onQuit(self, e):
+    def on_quit(self, e):
         wait = wx.BusyInfo("Logging out...")
         self.auth.logout()
         del wait

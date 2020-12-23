@@ -3,7 +3,6 @@ import struct, os
 
 def calculate_hash(name):
     try:
-
         longlongformat = "<q"  # little-endian long long
         bytesize = struct.calcsize(longlongformat)
         f = open(name, "rb")
@@ -30,4 +29,4 @@ def calculate_hash(name):
         return returnedhash
 
     except Exception as e:
-        return "IOError"
+        return None

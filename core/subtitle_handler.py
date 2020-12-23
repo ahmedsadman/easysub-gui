@@ -12,10 +12,10 @@ class SubtitleHandler:
         self.auth = auth
         self.rpc = self.auth.get_rpc()
 
-    def GetHash(self, path):
+    def get_hash(self, path):
         return calculate_hash(path)
 
-    def ProcessSub(self, Format, path):
+    def process_sub(self, Format, path):
         # unpacks subtitle file, places it in the movie folder, and renames it according to the movie name
         print("Unpacking subtitle file...\n")
         Path = path
@@ -30,16 +30,16 @@ class SubtitleHandler:
                 f.close()
         if not comp.closed:
             comp.close()
-        self.CleanUp()
+        self.cleanup()
         print("complete")
 
-    def CleanUp(self):
+    def cleanup(self):
         os.remove("sub.gz")
 
-    def subSearch(self, path):
+    def search(self, path):
         # api processing
-        self.hash = self.GetHash(path)
-        token = self.auth.getToken()
+        self.hash = self.get_hash(path)
+        token = self.auth.get_token()
         print("Please wait...")
         self.param = [
             token,  # token
@@ -59,12 +59,12 @@ class SubtitleHandler:
         self.subFormat = Obj["data"][0]["SubFormat"]
 
         # subtitle download
-        self.DownloadSub(path)
+        self.download_sub(path)
         return True
 
-    def DownloadSub(self, path):
+    def download_sub(self, path):
         print("Downloading Subtitle...")
         opener = urllib.URLopener()
         opener.retrieve(self.Download, "sub.gz")
         print("\nFile Downloaded")
-        Val = self.ProcessSub(self.subFormat, path)  # True or False
+        Val = self.process_sub(self.subFormat, path)  # True or False

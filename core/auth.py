@@ -17,7 +17,7 @@ class Auth:
     def get_user_agent(self):
         return self.user_agent
 
-    def LoginData(self):
+    def get_login_data(self):
         # to access the OpenSub api, every user should have an account,
         # the account credentials are stored in the folder Login.txt,
         # this function retrieves the data from the said file
@@ -42,14 +42,14 @@ class Auth:
             f.close()
         return LoginInfo
 
-    def getToken(self):
+    def get_token(self):
         # function to login the user
         print("Inside gettoken func")
         if self.Token is not None:
             return self.Token
         else:
             print("Logging in...")
-            data = self.LoginData()
+            data = self.get_login_data()
             User = data[0]
             Pass = data[1]
             self.logindata = self.rpc.LogIn(User, Pass, "eng", self.user_agent)
