@@ -2,8 +2,7 @@ from xmlrpc.client import ServerProxy
 import os
 import urllib.request as urllib, gzip, sys
 from .hash import calculate_hash
-
-server = "http://api.opensubtitles.org/xml-rpc"
+from .static import Static
 
 
 # the main class to download subtitles using api

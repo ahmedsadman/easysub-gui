@@ -1,15 +1,14 @@
 from xmlrpc.client import ServerProxy
-
-server = "http://api.opensubtitles.org/xml-rpc"
+from .static import Static
 
 
 class Auth:
     def __init__(self):
         self.rpc = ServerProxy(
-            server, allow_none=True
+            Static.server_url, allow_none=True
         )  # allow_none is mandatory to make some methods work
         self.Token = None
-        self.user_agent = "muhib96"
+        self.user_agent = Static.agent
 
     def get_rpc(self):
         return self.rpc
