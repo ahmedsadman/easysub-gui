@@ -1,7 +1,7 @@
 import struct, os
 
 
-def hash(name):
+def calculate_hash(name):
     try:
 
         longlongformat = "<q"  # little-endian long long
