@@ -18,11 +18,13 @@ class GUI(wx.Frame):
         self.font = wx.Font(
             pointSize=10, family=wx.DEFAULT, style=wx.NORMAL, weight=wx.BOLD
         )
-        wait = wx.BusyInfo("Logging in, please wait...")
         self.auth = Auth()
+        self.login_user()
         self.sub_handler = SubtitleHandler(self.auth)
 
+    def login_user(self):
         try:
+            wait = wx.BusyInfo("Logging in, please wait...")
             self.token = self.auth.get_token()  # login the user
         except Exception as e:
             print(e)
