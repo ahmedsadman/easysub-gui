@@ -129,7 +129,6 @@ class GUI(wx.Frame):
 
     def downloader(self):
         total_items = self.list.GetItemCount()
-        print("Total Items", total_items)
         for item_index in range(total_items):
             path = self.list.GetItem(
                 item_index, 0
@@ -137,21 +136,16 @@ class GUI(wx.Frame):
             path = path.GetText()  # contains the path of the movie file
             # do some work with the path and do your download
             self.list.SetItem(item_index, 1, "Downloading")
-            print("Getting inside try/catch")
             try:
-                print("Inside Try")
                 if self.sub_handler.search(path):
                     wx.CallAfter(
                         self.list.SetItem, item_index, 1, "OK"
                     )  # update the listcontrol for
-                    print("Inside If")
                 else:
                     wx.CallAfter(
                         self.list.SetItem, item_index, 1, "Not Found"
                     )  # update the listcontrol for
-                    print("Inside else")
             except Exception as e:
-                print("Inside Exception")
                 wx.MessageBox("Error: %s" % e, "Error", wx.OK | wx.ICON_ERROR)
                 self.list.SetItem(item_index, 1, "Error")
                 return

@@ -48,7 +48,6 @@ class Auth:
         return LoginInfo
 
     def login(self):
-        print("Logging in...")
         data = self.get_login_data()
         User = data[0]
         Pass = data[1]
@@ -57,7 +56,6 @@ class Auth:
             return False
 
         self.Token = self.logindata["token"]
-        print("login complete")
         return self.Token
 
     def get_token(self):
@@ -69,4 +67,3 @@ class Auth:
     def logout(self):
         # function to logout
         self.rpc.LogOut(self.Token)
-        print("Logout success")

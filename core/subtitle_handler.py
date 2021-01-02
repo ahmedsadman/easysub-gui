@@ -16,7 +16,6 @@ class SubtitleHandler:
 
     def process_sub(self, Format, path):
         # unpacks subtitle file, places it in the movie folder, and renames it according to the movie name
-        print("Unpacking subtitle file...\n")
         Path = path
         movieFile = os.path.basename(Path)
         subFileName = os.path.splitext(Path)[0] + "." + Format
@@ -30,7 +29,6 @@ class SubtitleHandler:
         if not comp.closed:
             comp.close()
         self.cleanup()
-        print("complete")
 
     def cleanup(self):
         os.remove("sub.gz")
@@ -62,8 +60,6 @@ class SubtitleHandler:
         return True
 
     def download_sub(self, path):
-        print("Downloading Subtitle...")
         opener = urllib.URLopener()
         opener.retrieve(self.Download, "sub.gz")
-        print("\nFile Downloaded")
         Val = self.process_sub(self.subFormat, path)  # True or False

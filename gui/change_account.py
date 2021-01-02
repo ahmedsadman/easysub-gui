@@ -50,7 +50,6 @@ class ChangeAccountGUI(wx.Dialog):
         if username == "" or password == "":
             return
         string = "[username]=" + username + "\n" + "[password]=" + password
-        print(string)
 
         with open(Static.datafile, "w") as f:
             f.write(string)

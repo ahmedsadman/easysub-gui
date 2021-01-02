@@ -10,6 +10,5 @@ class FileDrop(wx.FileDropTarget):
     def OnDropFiles(self, x, y, filenames):
         for i in filenames:
             index = self.window.InsertItem(0, i)
-            print("Index is", index)
             self.window.SetItem(index, 1, "Waiting")
         return 0
