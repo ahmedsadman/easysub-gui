@@ -16,9 +16,16 @@ Easysub is a program written in wxPython that automatically downloads movie subt
 You need to have the following to run this program:
 
 -   Python 3.6.x
--   (Optional) An account in [OpenSubtitles](https://www.opensubtitles.org)
+-   An account in [OpenSubtitles](https://www.opensubtitles.org) with registered API agent
 
-Create a virtual environment and install the requirements using `pip install -r requirements.txt`. Then start the program using `python main.py`. Upon starting, please provide your OpenSub creds in `Menu > Account info`. You can ignore putting account info, in that case guest login will be used (not recommended).
+Now do the steps as follows:
+
+-   Create a virtual environment and install the requirements using `pip install -r requirements.txt`
+-   Create a `.env` file in the root directory supplying `agent` info provided by OpenSubtitles API
+-   Start the program using `python main.py`
+-   (Optional) Upon starting, please provide your OpenSub creds in `Menu > Account info`.
+
+You can ignore putting account info, in that case guest login will be used (not recommended).
 
 ### Binary Distribution
 
