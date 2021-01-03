@@ -1,7 +1,7 @@
 venv
 *.pyc
 __pycache__
-Account.bin
+*.bin
 .env
 dist/
 build/

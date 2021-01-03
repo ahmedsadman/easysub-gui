@@ -1,16 +1,16 @@
 import os
 from xmlrpc.client import ServerProxy
-from .static import Static
+from .config import Config
 
 
 class Auth:
     def __init__(self):
+        self.config = Config.get_instance()
         self.rpc = ServerProxy(
-            Static.server_url, allow_none=True
+            self.config.get("server_url"), allow_none=True
         )  # allow_none is mandatory to make some methods work
         self.Token = None
-        self.user_agent = Static.agent
-        self.datafile = Static.datafile
+        self.user_agent = self.config.get("user_agent")
 
     def get_rpc(self):
         return self.rpc
@@ -18,39 +18,9 @@ class Auth:
     def get_user_agent(self):
         return self.user_agent
 
-    def get_login_data(self):
-        # to access the OpenSub api, every user should have an account,
-        # the account credentials are stored in the folder Login.txt,
-        # this function retrieves the data from the said file
-        if not os.path.exists(self.datafile):
-            # create file if not exists
-            with open(self.datafile, "w") as f:
-                f.writelines(["[username]=\n", "[password]="])
-
-        with open(self.datafile, "r") as f:
-            x = f.readlines()
-            x1 = x[0].strip()  # strip function is used to avoid Newlines
-            x2 = x[1].strip()
-            LoginInfo = (
-                x1[x1.index("=") + 1 :],
-                x2[x2.index("=") + 1 :],
-            )  # only selects the texts which are after the equal sign, check Login.txt
-            if LoginInfo[0] == "" or LoginInfo[1] == "":
-                LoginInfo = (
-                    None,
-                    None,
-                )  # Anonymous login is supported, it executes if no Logindata is provided
-                # print a warning message if logindata not found, because it may result Status Code 401 Unauthorized
-                print(
-                    "WARNING: This program requires your userinfo to work properly. Please provide your login credentials in Login.txt\nTrying anonymous login\n"
-                )
-
-        return LoginInfo
-
     def login(self):
-        data = self.get_login_data()
-        User = data[0]
-        Pass = data[1]
+        User = self.config.get("username")
+        Pass = self.config.get("password")
         self.logindata = self.rpc.LogIn(User, Pass, "eng", self.user_agent)
         if "200 OK" not in self.logindata["status"]:
             return False

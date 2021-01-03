@@ -1,5 +1,5 @@
 import wx
-from core import Static
+from core import Config
 
 
 class ChangeAccountGUI(wx.Dialog):
@@ -47,12 +47,12 @@ class ChangeAccountGUI(wx.Dialog):
     def onConfirm(self, e):
         username = self.user_txt.GetValue()
         password = self.pass_txt.GetValue()
+        config = Config.get_instance()
         if username == "" or password == "":
             return
-        string = "[username]=" + username + "\n" + "[password]=" + password
 
-        with open(Static.datafile, "w") as f:
-            f.write(string)
+        config.set("username", username)
+        config.set("password", password)
 
         wx.MessageBox(
             "Account info updated. Please restart the program",
