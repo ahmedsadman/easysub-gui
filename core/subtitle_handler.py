@@ -42,7 +42,7 @@ class SubtitleHandler:
             {
                 "sublanguageid": "eng",  # sublanguageid
                 "moviehash": self.hash,  # hash
-                "moviesize": os.path.getsize(path),  # byte size
+                "moviesize": str(os.path.getsize(path)),  # byte size
             },
         ]
         Obj = self.rpc.SearchSubtitles(token, self.param)
