@@ -43,6 +43,14 @@ class ChangeAccountGUI(wx.Dialog):
         vbox.Fit(self)
         self.Centre()
         self.Show(True)
+        self.loadText()
+
+    def loadText(self):
+        config = Config.get_instance()
+        (username, password) = (config.get("username"), config.get("password"))
+        if username and password:
+            self.user_txt.SetValue(username)
+            self.pass_txt.SetValue(password)
 
     def onConfirm(self, e):
         username = self.user_txt.GetValue()
