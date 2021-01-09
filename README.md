@@ -31,4 +31,4 @@ You can ignore putting account info, in that case guest login will be used (not 
 
 A standalone binary distribution is available for Windows. Please look into the _Releases_ tab to download the latest version. Just download it, unzip and click _EasySub.exe_, it's out of the box and ready to use. Windows distribution will be maintained regularly
 
-For generating builds _pyinstaller_ is used. If you need to generate builds for other OS, clone this repo and follow documentation of _pyinstaller_ as required.
+For generating builds _pyinstaller_ is used. If you need to generate builds for other OS, clone this repo and follow documentation of _pyinstaller_ as required. The build command used is: `pyinstaller main.py -n EasySub --noconsole --onefile`
