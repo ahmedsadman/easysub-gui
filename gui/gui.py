@@ -116,7 +116,7 @@ class GUI(wx.Frame):
 
         info = wx.adv.AboutDialogInfo()
         info.SetName("Easy Sub")
-        info.SetVersion("2.1")
+        info.SetVersion("2.2")
         info.SetDescription(description)
         info.SetLicense(license)
         info.AddDeveloper("Sadman Muhib Samyo")
