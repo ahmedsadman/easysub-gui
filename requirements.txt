@@ -10,7 +10,7 @@ mypy-extensions==0.4.3
 numpy==1.19.4
 pathspec==0.8.1
 pefile==2019.4.18
-Pillow==8.0.1
+Pillow==9.3.0
 pyinstaller==4.1
 pyinstaller-hooks-contrib==2020.11
 python-dotenv==0.15.0
